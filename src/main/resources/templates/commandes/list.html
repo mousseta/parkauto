@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Commandes</title>
+    <!-- Lien vers le CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- En-tête de la page -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Liste des Commandes</h1>
+            <div>
+                <a href="/commandes/new" class="btn btn-primary me-2">Ajouter une Commande</a>
+                <a href="/dashboard" class="btn btn-secondary">Retour au Tableau de Bord</a>
+            </div>
+        </div>
+
+        <!-- Tableau des commandes -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Quantité</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="commande : ${commandes}">
+                        <td th:text="${commande.id}"></td>
+                        <td th:text="${commande.qte}"></td>
+                        <td th:text="${commande.description}"></td>
+                        <td th:text="${commande.prix}"></td>
+                        <td th:text="${commande.dateCmd}"></td>
+                        <td>
+                            <a th:href="@{/commandes/edit/{id}(id=${commande.id})}" class="btn btn-sm btn-warning me-1">Modifier</a>
+                            <a th:href="@{/commandes/delete/{id}(id=${commande.id})}" 
+                               class="btn btn-sm btn-danger" 
+                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
+                               Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script Bootstrap (facultatif pour JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ajouter une Commande</title>
+    <!-- Lien vers le CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 th:if="${commande.id == null}" class="mb-0">Ajouter une Commande</h2>
+                <h2 th:if="${commande.id != null}" class="mb-0">Modifier une Commande</h2>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/commandes}" th:object="${commande}" method="post" class="needs-validation" novalidate>
+                    <!-- Champ Quantité -->
+                    <div class="mb-3">
+                        <label for="qte" class="form-label">Quantité :</label>
+                        <input type="number" id="qte" th:field="*{qte}" class="form-control" required />
+                        <div class="invalid-feedback">Veuillez entrer une quantité valide.</div>
+                    </div>
+
+                    <!-- Champ Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description :</label>
+                        <input type="text" id="description" th:field="*{description}" class="form-control" required />
+                        <div class="invalid-feedback">Veuillez entrer une description valide.</div>
+                    </div>
+
+                    <!-- Champ Prix -->
+                    <div class="mb-3">
+                        <label for="prix" class="form-label">Prix :</label>
+                        <input type="number" step="0.01" id="prix" th:field="*{prix}" class="form-control" required />
+                        <div class="invalid-feedback">Veuillez entrer un prix valide.</div>
+                    </div>
+
+                    <!-- Champ Date -->
+                    <div class="mb-3">
+                        <label for="dateCmd" class="form-label">Date :</label>
+                        <input type="date" id="dateCmd" th:field="*{dateCmd}" class="form-control" required />
+                        <div class="invalid-feedback">Veuillez entrer une date valide.</div>
+                    </div>
+
+                    <!-- Boutons -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">Enregistrer</button>
+                        <a href="/commandes" class="btn btn-secondary">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script pour activer les validations Bootstrap -->
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>

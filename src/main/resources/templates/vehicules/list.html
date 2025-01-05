@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des véhicules</title>
+    <!-- Lien vers le CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- En-tête -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Liste des véhicules</h1>
+            <div>
+                <a href="/vehicules/new" class="btn btn-primary me-2">Ajouter un véhicule</a>
+                <a th:href="@{/dashboard}" class="btn btn-secondary">Retour au Tableau de Bord</a>
+            </div>
+        </div>
+
+        <!-- Tableau des véhicules -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Matricule</th>
+                        <th>Année</th>
+                        <th>Prix</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vehicule : ${vehicules}">
+                        <td th:text="${vehicule.matricule}"></td>
+                        <td th:text="${vehicule.anneeModel}"></td>
+                        <td th:text="${vehicule.prix}"></td>
+                        <td>
+                            <img th:src="@{'/images/' + ${vehicule.imageVehicule}}" alt="Image du véhicule" class="img-thumbnail" style="width: 100px; height: auto;" />
+                        </td>
+                        <td>
+                            <a th:href="@{'/vehicules/edit/' + ${vehicule.matricule}}" class="btn btn-sm btn-warning me-1">Modifier</a>
+                            <a th:href="@{'/vehicules/delete/' + ${vehicule.matricule}}" 
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Voulez-vous vraiment supprimer ce véhicule ?');">
+                               Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script Bootstrap (facultatif pour JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
